@@ -44,6 +44,14 @@ describe('Command.showSuggestionAfterError()', () => {
     assert.equal(suggestion, '--example');
   });
 
+  test('when unknown option with attached value and showSuggestionAfterError() then show suggestion', () => {
+    const program = new Command();
+    program.showSuggestionAfterError();
+    program.option('--color <value>');
+    const suggestion = getSuggestion(program, '--colr=red');
+    assert.equal(suggestion, '--color');
+  });
+
   test('when unknown option and showSuggestionAfterError(false) then do not show suggestion', () => {
     const program = new Command();
     program.showSuggestionAfterError(false);
