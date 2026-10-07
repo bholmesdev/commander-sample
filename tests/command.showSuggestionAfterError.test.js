@@ -51,4 +51,20 @@ describe('Command.showSuggestionAfterError()', () => {
     const suggestion = getSuggestion(program, '--exampel');
     assert.equal(suggestion, null);
   });
+
+  test('when unknown option differs only in case then suggest option in declared case', () => {
+    const program = new Command();
+    program.showSuggestionAfterError();
+    program.option('--color <value>');
+    const suggestion = getSuggestion(program, '--COLOR');
+    assert.equal(suggestion, '--color');
+  });
+
+  test('when unknown command differs only in case then suggest command in declared case', () => {
+    const program = new Command();
+    program.showSuggestionAfterError();
+    program.command('serve');
+    const suggestion = getSuggestion(program, 'SERVE');
+    assert.equal(suggestion, 'serve');
+  });
 });
